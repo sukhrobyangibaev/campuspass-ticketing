@@ -58,7 +58,8 @@ Use `__post_init__` to initialize an internal `_sold` counter (starts at 0) to t
 Add a `remaining` property that returns how many tickets are still available.
 
 Add a `reserve(quantity)` method that:
-- Raises `InvalidBookingError` if `quantity` is not a positive integer (e.g., 0, -1, or a non-integer like `"two"`)
+- Tries to convert `quantity` to `int` (using `try/except`). Raises `InvalidBookingError` if the conversion fails (e.g., `"two"` or `None`)
+- Raises `InvalidBookingError` if `quantity` is not positive (e.g., 0 or -1)
 - Raises `SoldOutError` if `quantity > remaining`
 - Otherwise, increases `_sold` by `quantity`
 
