@@ -53,10 +53,14 @@ Now make the event and ticket data come alive. Implement two classes:
 - `price` (float) — ticket price
 - `capacity` (int) — total number of tickets
 
-Add a `remaining` property and a `reserve(quantity)` method. The method should:
-- Raise `InvalidBookingError` if `quantity` is not a positive integer
-- Raise `SoldOutError` if there are not enough tickets left
-- Otherwise, record the reservation
+Use `__post_init__` to initialize an internal `_sold` counter (starts at 0) to track how many tickets have been reserved.
+
+Add a `remaining` property that returns how many tickets are still available.
+
+Add a `reserve(quantity)` method that:
+- Raises `InvalidBookingError` if `quantity` is not a positive integer (e.g., 0, -1, or a non-integer like `"two"`)
+- Raises `SoldOutError` if `quantity > remaining`
+- Otherwise, increases `_sold` by `quantity`
 
 **`Event`** — represents an event with multiple ticket tiers. Use a dataclass with these fields:
 - `event_id` (str)
@@ -66,8 +70,10 @@ Add a `remaining` property and a `reserve(quantity)` method. The method should:
 - `description` (str)
 - `tiers` (dict mapping tier ID strings to `TicketTier` objects)
 
-Add a `book(email, tier_name, quantity)` method. It should:
-- Raise `InvalidBookingError` if the tier name doesn't exist
+Use `__post_init__` to initialize an internal `_booked_emails` set (starts empty) to track which emails have already booked this event.
+
+Add a `book(email, tier_id, quantity)` method. It should:
+- Raise `InvalidBookingError` if the tier ID (the dictionary key, e.g. `"general"`, `"vip"`) doesn't exist in `self.tiers`
 - Raise `DuplicateBookingError` if this email has already booked this event
 - Otherwise, reserve the tickets on the correct tier and record the booking
 
