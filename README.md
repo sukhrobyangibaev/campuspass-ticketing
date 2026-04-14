@@ -100,7 +100,7 @@ Then update the existing exceptions:
 And add one new exception:
 - `PaymentDeclinedError` — inherits from `PaymentError`
 
-Your models from Task 2 should continue working without changes since the hierarchy is backward-compatible.
+Your old code from Task 2 won't break because the new classes are added in between, not instead of, the old ones.
 
 **Verify:** Everything from Task 2 still works. The error type shown in error messages should still display the specific exception name (e.g., `SoldOutError`, not `AvailabilityError`).
 
