@@ -187,3 +187,9 @@ Build the full checkout pipeline that ties everything together: validate input �
 - Book a paid event with token `tok_valid_1234` — should succeed
 - Try `tok_decline_nope` — should fail with `PaymentDeclinedError` and tickets should NOT be deducted
 - Try `tok_error_crash` — should fail with `PaymentError` and show "Caused by: ConnectionError" in the error panel, and tickets should NOT be deducted
+
+---
+
+## Acknowledgment
+
+This tutorial format was suggested by Maftuna Ro'zmetova (SE1) - thank you for the idea!
