@@ -1,4 +1,5 @@
 import sys
+import traceback
 from pathlib import Path
 from flask import Flask, render_template, request, jsonify
 
@@ -210,6 +211,7 @@ def api_book(event_id):
                 "booking": result,
             })
         except Exception as e:
+            traceback.print_exc()
             error_info = _extract_error_info(e)
             status = 409 if "Duplicate" in type(e).__name__ else 400
             return jsonify(error_info), status
