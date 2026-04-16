@@ -34,6 +34,7 @@ def _try_import(module_path, label):
         return mod
     except Exception as e:
         print(f"  ❌ {label} — error: {e}")
+        traceback.print_exc()
         return None
 
 
@@ -89,6 +90,7 @@ def _build_event_store():
                 continue
             except Exception as e:
                 print(f"  ⚠️  Could not build Event '{ev_data['id']}' from models: {e}")
+                traceback.print_exc()
 
         # Fallback: store as plain dict
         _event_store[ev_data["id"]] = ev_data
@@ -184,6 +186,7 @@ def api_book(event_id):
             tier_name = booking_req.tier_name
             quantity = booking_req.quantity
         except Exception as e:
+            traceback.print_exc()
             error_info = _extract_error_info(e)
             return jsonify(error_info), 400
     else:
@@ -234,6 +237,7 @@ def api_book(event_id):
                 "booking": booking_record,
             })
         except Exception as e:
+            traceback.print_exc()
             error_info = _extract_error_info(e)
             status = 409 if "Duplicate" in type(e).__name__ else 400
             return jsonify(error_info), status
